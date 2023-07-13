@@ -5,7 +5,7 @@
 
         <div class="flex mt-1 mb-2">
             <div class="relative flex-1 col-span-4" x-data="{ show: true }">
-                <input class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                <input class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                         id="password"
                         :type="show ? 'password' : 'text'"
                         name="password"
@@ -30,6 +30,13 @@
                 <x-primary-button wire:click="generatePassword" type="button">{{ __('Generate') }}</x-primary-button>
             </div>
         </div>
+
+        <!-- Password strength -->
+        <span class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+            <span class="font-semibold">{{ __('Password strength') }}:</span> {{ __($strengthLevels[$strengthScore] ?? 'None') }}
+        </span>
+
+        <x-progress value="{{ $strengthScore }}" max="4" class="mt-1 w-full"></x-progress>
 
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
     </div>
