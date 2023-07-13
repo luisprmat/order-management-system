@@ -9,6 +9,7 @@
                         id="password"
                         :type="show ? 'password' : 'text'"
                         name="password"
+                        wire:model="password"
                         required autocomplete="new-password" />
 
                 <button type="button" class="flex absolute inset-y-0 right-0 items-center pr-3" @click="show = !show" :class="{'hidden': !show, 'block': show }">
@@ -25,6 +26,9 @@
                     </svg>
                 </button>
             </div>
+            <div class="flex items-center place-content-end ml-1">
+                <x-primary-button wire:click="generatePassword" type="button">{{ __('Generate') }}</x-primary-button>
+            </div>
         </div>
 
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
@@ -36,7 +40,8 @@
 
         <x-text-input id="password_confirmation" class="block mt-1 w-full"
                         type="password"
-                        name="password_confirmation" required autocomplete="new-password" />
+                        wire:model="passwordConfirmation"
+                        name="password_confirmation" required />
 
         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
     </div>
