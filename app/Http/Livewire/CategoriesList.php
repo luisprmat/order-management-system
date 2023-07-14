@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Livewire\WithPagination;
 
 class CategoriesList extends Component
@@ -14,6 +15,8 @@ class CategoriesList extends Component
     public Category $category;
 
     public bool $showModal = false;
+
+    public array $active = [];
 
     public function openModal()
     {
@@ -44,9 +47,20 @@ class CategoriesList extends Component
         $this->reset('showModal');
     }
 
-    public function render()
+    public function toggleIsActive($categoryId)
+    {
+        Category::where('id', $categoryId)->update([
+            'is_active' => $this->active[$categoryId],
+        ]);
+    }
+
+    public function render(): View
     {
         $categories = Category::paginate(10);
+
+        $this->active = $categories->mapWithKeys(
+            fn (Category $item) => [$item['id'] => (bool) $item['is_active']]
+        )->toArray();
 
         return view('livewire.categories-list', [
             'categories' => $categories,
