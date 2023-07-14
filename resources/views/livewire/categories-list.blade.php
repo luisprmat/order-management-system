@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 dark:text-gray-100 dark:border-gray-900 dark:bg-inherit">
 
-                    <x-primary-button class="mb-4">
+                    <x-primary-button wire:click.prevent="openModal" class="mb-4">
                         {{ __('Add Category') }}
                     </x-primary-button>
 
@@ -74,6 +74,51 @@
                     {{ $categories->links() }}
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{-- Modal for create category --}}
+    <div class="@if (!$showModal) hidden @else flex @endif items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-800 bg-opacity-90">
+        <div class="w-1/2 bg-white rounded-lg">
+            <form wire:submit.prevent="save" class="w-full">
+                <div class="flex flex-col items-start p-4">
+                    <div class="flex items-center pb-4 mb-4 w-full border-b">
+                        <div class="text-lg font-medium text-gray-900">{{ __('Create Category') }}</div>
+                        <svg wire:click.prevent="$set('showModal', false)"
+                             class="ml-auto w-6 h-6 text-gray-700 cursor-pointer fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                        </svg>
+                    </div>
+                    <div class="mb-2 w-full">
+                        <label class="block text-sm font-medium text-gray-700" for="category.name">
+                            {{ __('Name') }}
+                        </label>
+                        <input wire:model="category.name" id="category.name"
+                               class="py-2 pr-4 pl-2 mt-2 w-full text-sm rounded-lg border border-gray-400 sm:text-base focus:outline-none focus:border-blue-400" />
+                        @error('category.name')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-2 w-full">
+                        <label class="block text-sm font-medium text-gray-700" for="category.slug">
+                            {{ __('Slug') }}
+                        </label>
+                        <input wire:model="category.slug" id="category.slug"
+                               class="py-2 pr-4 pl-2 mt-2 w-full text-sm rounded-lg border border-gray-400 sm:text-base focus:outline-none focus:border-blue-400" />
+                        @error('category.slug')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mt-4 ml-auto">
+                        <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700" type="submit">
+                            {{ __('Create') }}
+                        </button>
+                        <button wire:click.prevent="$set('showModal', false)" class="px-4 py-2 font-bold text-white bg-gray-500 rounded" type="button" data-dismiss="modal">
+                            {{ __('Close') }}
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
