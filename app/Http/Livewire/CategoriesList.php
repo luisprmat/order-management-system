@@ -21,6 +21,8 @@ class CategoriesList extends Component
 
     public array $active = [];
 
+    public int $editedCategoryId = 0;
+
     public int $currentPage = 1;
 
     public int $perPage = 10;
@@ -61,11 +63,20 @@ class CategoriesList extends Component
     {
         $this->validate();
 
-        $this->category->position = Category::max('position') + 1;
+        if ($this->editedCategoryId === 0) {
+            $this->category->position = Category::max('position') + 1;
+        }
 
         $this->category->save();
 
-        $this->reset('showModal');
+        $this->resetValidation();
+        $this->reset('showModal', 'editedCategoryId');
+    }
+
+    public function cancelCategoryEdit()
+    {
+        $this->resetValidation();
+        $this->reset('editedCategoryId');
     }
 
     public function toggleIsActive($categoryId)
@@ -73,6 +84,15 @@ class CategoriesList extends Component
         Category::where('id', $categoryId)->update([
             'is_active' => $this->active[$categoryId],
         ]);
+    }
+
+    public function editCategory($categoryId)
+    {
+        $this->resetValidation();
+
+        $this->editedCategoryId = $categoryId;
+
+        $this->category = Category::find($categoryId);
     }
 
     public function render(): View
