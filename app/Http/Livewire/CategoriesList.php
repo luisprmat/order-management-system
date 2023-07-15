@@ -27,6 +27,8 @@ class CategoriesList extends Component
 
     public int $perPage = 10;
 
+    protected $listeners = ['delete'];
+
     public function openModal()
     {
         $this->showModal = true;
@@ -93,6 +95,22 @@ class CategoriesList extends Component
         $this->editedCategoryId = $categoryId;
 
         $this->category = Category::find($categoryId);
+    }
+
+    public function deleteConfirm($method, $id = null)
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type'   => 'warning',
+            'title'  => __('Are you sure?'),
+            'text'   => '',
+            'id'     => $id,
+            'method' => $method,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        Category::findOrFail($id)->delete();
     }
 
     public function render(): View
