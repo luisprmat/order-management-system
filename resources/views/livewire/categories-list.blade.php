@@ -34,7 +34,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody wire:sortable="updateOrder" wire:sortable.options="{ animation: 150, ghostClass: 'bg-blue-100' }" class="bg-white divide-y divide-gray-200 divide-solid dark:bg-gray-900 dark:divide-gray-600">
+                            <tbody wire:sortable="updateOrder" wire:sortable.options="{ animation: 150, ghostClass: 'bg-blue-300' }" class="bg-white divide-y divide-gray-200 divide-solid dark:bg-gray-900 dark:divide-gray-600">
                                 @foreach ($categories as $category)
                                     <tr wire:sortable.item="{{ $category->id }}" wire:key="{{ $loop->index }}">
                                         <td class="px-6">
@@ -88,7 +88,7 @@
                                                 <x-primary-button wire:click="editCategory({{ $category->id }})">
                                                     {{ __('Edit') }}
                                                 </x-primary-button>
-                                                <button wire:click="deleteConfirm('delete', {{ $category->id }})" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 rounded-md border border-transparent hover:text-red-700 hover:bg-red-300">
+                                                <button wire:click="deleteConfirm('delete', {{ $category->id }})" class="px-4 py-2 text-xs text-red-500 dark:text-red-700 uppercase bg-red-200 dark:bg-red-300 rounded-md border border-transparent hover:text-red-700 hover:bg-red-300">
                                                     {{ __('Delete') }}
                                                 </button>
                                             @endif
