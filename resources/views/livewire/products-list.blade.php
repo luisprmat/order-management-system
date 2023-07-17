@@ -39,10 +39,46 @@
                                     <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800 w-48">
                                     </th>
                                 </tr>
+
+                                <tr class="dark:bg-gray-900">
+                                    <td></td>
+                                    <td class="px-2 py-2">
+                                        <x-text-input wire:model="searchColumns.name" type="text" placeholder="{{ __('Search') }}..." />
+                                    </td>
+                                    <td class="px-2 py-1">
+                                        <x-select-input wire:model="searchColumns.category_id"
+                                                class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                            <option value="">-- {{ __('choose category') }} --</option>
+                                            @foreach($categories as $id => $category)
+                                                <option value="{{ $id }}">{{ $category }}</option>
+                                            @endforeach
+                                        </x-select-input>
+                                    </td>
+                                    <td class="px-2 py-1">
+                                        <x-select-input wire:model="searchColumns.country_id"
+                                                class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                            <option value="">-- {{ __('choose country') }} --</option>
+                                            @foreach($countries as $id => $country)
+                                                <option value="{{ $id }}">{{ $country }}</option>
+                                            @endforeach
+                                        </x-select-input>
+                                    </td>
+                                    <td class="px-2 py-1 text-sm">
+                                        <div>
+                                            {{ __('From') }}
+                                            <x-text-input wire:model="searchColumns.price.0" type="number" class="mr-2 w-full text-sm" />
+                                        </div>
+                                        <div>
+                                            {{ __('To') }}
+                                            <x-text-input wire:model="searchColumns.price.1" type="number" class="w-full text-sm" />
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid dark:divide-gray-600">
-                                @foreach($products as $product)
+                                @forelse($products as $product)
                                     <tr class="bg-white">
                                         <td class="px-4 py-2 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
                                             <input type="checkbox" value="{{ $product->id }}" wire:model="selected">
@@ -56,7 +92,7 @@
                                             @endforeach
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
-                                            {{ $product->country->name }}
+                                            {{ $product->countryName }}
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
                                             $ {{ number_format($product->price, 0, ',', '.') }}
@@ -70,7 +106,11 @@
                                             </button>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr class="bg-gray-300 dark:bg-gray-900">
+                                        <td colspan="6" class="text-center">{{ __('No results found!') }}</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
