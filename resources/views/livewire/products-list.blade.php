@@ -22,21 +22,36 @@
                         <table class="min-w-full border divide-y divide-gray-200 dark:divide-gray-800">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800">
+                                    <th class="px-6 py-3 text-left bg-gray-50">
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800">
-                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 dark:text-gray-400 uppercase">{{ __('Name') }}</span>
+                                    <th wire:click="sortByColumn('products.name')" class="px-6 py-3 text-left bg-gray-50 cursor-pointer">
+                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 uppercase">{{ __('Name') }}</span>
+                                        @if ($sortColumn == 'products.name')
+                                            @include('svg.sort-' . $sortDirection)
+                                        @else
+                                            @include('svg.sort')
+                                        @endif
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800">
-                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 dark:text-gray-400 uppercase">{{ __('Categories') }}</span>
+                                    <th class="px-6 py-3 text-left bg-gray-50">
+                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 uppercase">{{ __('Categories') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800">
-                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 dark:text-gray-400 uppercase">{{ __('Country') }}</span>
+                                    <th wire:click="sortByColumn('countryName')" class="px-6 py-3 text-left bg-gray-50">
+                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 uppercase">{{ __('Country') }}</span>
+                                        @if ($sortColumn == 'countryName')
+                                            @include('svg.sort-' . $sortDirection)
+                                        @else
+                                            @include('svg.sort')
+                                        @endif
                                     </th>
-                                    <th class="px-6 py-3 w-32 text-left bg-gray-50 dark:bg-gray-800">
-                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 dark:text-gray-400 uppercase">{{ __('Price') }}</span>
+                                    <th wire:click="sortByColumn('price')" class="px-6 py-3 w-32 text-left bg-gray-50">
+                                        <span class="text-xs font-medium tracking-wider leading-4 text-gray-500 uppercase">{{ __('Price') }}</span>
+                                        @if ($sortColumn == 'price')
+                                            @include('svg.sort-' . $sortDirection)
+                                        @else
+                                            @include('svg.sort')
+                                        @endif
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-gray-50 dark:bg-gray-800 w-48">
+                                    <th class="px-6 py-3 text-left bg-gray-50">
                                     </th>
                                 </tr>
 
@@ -91,13 +106,13 @@
                                                 <span class="px-2 py-1 text-xs text-indigo-700 bg-indigo-200 rounded-md whitespace-nowrap">{{ $category->name }}</span>
                                             @endforeach
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-nowrap">
                                             {{ $product->countryName }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-nowrap">
                                             $ {{ number_format($product->price, 0, ',', '.') }}
                                         </td>
-                                        <td class="dark:bg-gray-900">
+                                        <td class="dark:bg-gray-900 whitespace-nowrap">
                                             <x-primary-link class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent hover:bg-gray-700">
                                                 {{ __('Edit') }}
                                             </x-primary-link>
