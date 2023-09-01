@@ -2,12 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\ProductsExport;
+use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
-use Livewire\Component;
-use App\Models\Category;
 use Illuminate\View\View;
+use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductsList extends Component
 {
@@ -33,7 +37,7 @@ class ProductsList extends Component
 
     protected $queryString = [
         'sortColumn' => [
-            'except' => 'products.name'
+            'except' => 'products.name',
         ],
         'sortDirection' => [
             'except' => 'asc',
@@ -66,10 +70,10 @@ class ProductsList extends Component
     public function deleteConfirm($method, $id = null): void
     {
         $this->dispatchBrowserEvent('swal:confirm', [
-            'type'  => 'warning',
+            'type' => 'warning',
             'title' => __('Are you sure?'),
-            'text'  => '',
-            'id'    => $id,
+            'text' => '',
+            'id' => $id,
             'method' => $method,
         ]);
     }
@@ -90,15 +94,22 @@ class ProductsList extends Component
         $this->reset('selected');
     }
 
+    public function export($format): BinaryFileResponse
+    {
+        abort_if(! in_array($format, ['csv', 'xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
+
+        return Excel::download(new ProductsExport($this->selected), 'products.'.$format);
+    }
+
     public function render(): View
     {
         $products = Product::query()
-            ->select(['products.*', 'countries.id as countryId', 'countries.name as countryName',])
+            ->select(['products.*', 'countries.id as countryId', 'countries.name as countryName'])
             ->join('countries', 'countries.id', '=', 'products.country_id')
             ->with('categories');
 
         foreach ($this->searchColumns as $column => $value) {
-            if (!empty($value)) {
+            if (! empty($value)) {
                 $products->when($column == 'price', function ($products) use ($value) {
                     if (is_numeric($value[0])) {
                         $products->where('products.price', '>=', $value[0]);
@@ -107,9 +118,9 @@ class ProductsList extends Component
                         $products->where('products.price', '<=', $value[1]);
                     }
                 })
-                ->when($column == 'category_id', fn($products) => $products->whereRelation('categories', 'id', $value))
-                ->when($column == 'country_id', fn($products) => $products->whereRelation('country', 'id', $value))
-                ->when($column == 'name', fn($products) => $products->where('products.' . $column, 'LIKE', '%' . $value . '%'));
+                    ->when($column == 'category_id', fn ($products) => $products->whereRelation('categories', 'id', $value))
+                    ->when($column == 'country_id', fn ($products) => $products->whereRelation('country', 'id', $value))
+                    ->when($column == 'name', fn ($products) => $products->where('products.'.$column, 'LIKE', '%'.$value.'%'));
             }
         }
 
