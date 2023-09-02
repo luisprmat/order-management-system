@@ -12,7 +12,7 @@
 
                     <div class="mb-4">
                         <div class="mb-4">
-                            <a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white dark:text-gray-800 uppercase bg-gray-800 dark:bg-gray-200 rounded-md border border-transparent hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white cursor-pointer">
+                            <a href="{{ route('products.create') }}" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white dark:text-gray-800 uppercase bg-gray-800 dark:bg-gray-200 rounded-md border border-transparent hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white cursor-pointer">
                                 {{ __('Create Product') }}
                             </a>
                         </div>
@@ -125,7 +125,7 @@
                                             $ {{ number_format($product->price, 0, ',', '.') }}
                                         </td>
                                         <td class="dark:bg-gray-900 whitespace-nowrap">
-                                            <x-primary-link class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent hover:bg-gray-700">
+                                            <x-primary-link href="{{ route('products.edit', $product) }}" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent hover:bg-gray-700">
                                                 {{ __('Edit') }}
                                             </x-primary-link>
                                             <button wire:click="deleteConfirm('delete', {{ $product->id }})" class="px-4 py-2 text-xs text-red-500 dark:text-red-700 uppercase bg-red-200 dark:bg-red-300 rounded-md border border-transparent hover:text-red-700 hover:bg-red-300">
