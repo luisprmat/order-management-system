@@ -84,7 +84,7 @@ class OrdersList extends Component
     {
         $this->dispatchBrowserEvent('swal:confirm', [
             'type' => 'warning',
-            'title' => _('Are you sure?'),
+            'title' => __('Are you sure?'),
             'text' => '',
             'id' => $id,
             'method' => $method,
