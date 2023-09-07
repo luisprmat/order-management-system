@@ -10,7 +10,14 @@ class TotalRevenueChart extends Component
 {
     public function render()
     {
-        return view('livewire.total-revenue-chart', ['data' => $this->getData()]);
+        return view('livewire.total-revenue-chart');
+    }
+
+    public function updateChartData(): void
+    {
+        $this->emitSelf('updateChartData', [
+            'data' => $this->getData(),
+        ]);
     }
 
     protected function getData(): array
