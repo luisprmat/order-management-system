@@ -10,6 +10,12 @@
             <div class="overflow-hidden bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 dark:text-gray-100 dark:border-gray-900 dark:bg-inherit">
 
+                    @error('orderexist')
+                        <div class="p-3 mb-4 text-green-700 bg-green-200 dark:text-green-200 dark:bg-green-800">
+                            {!! $message !!}
+                        </div>
+                    @enderror
+
                     <div class="mb-4">
                         <div class="mb-4">
                             <a href="{{ route('products.create') }}" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white dark:text-gray-800 uppercase bg-gray-800 dark:bg-gray-200 rounded-md border border-transparent hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white cursor-pointer">
@@ -107,10 +113,10 @@
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid dark:divide-gray-600">
                                 @forelse($products as $product)
                                     <tr class="bg-white">
-                                        <td class="px-4 py-2 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
+                                        <td class="px-4 py-2 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-nowrap">
                                             <input type="checkbox" value="{{ $product->id }}" wire:model="selected">
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200 whitespace-nowrap">
                                             {{ str($product->name)->limit(25, '...') }}
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
