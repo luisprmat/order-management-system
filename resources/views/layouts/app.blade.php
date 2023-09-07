@@ -41,6 +41,7 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/es.min.js"></script>
         <livewire:scripts />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
             window.addEventListener('swal:confirm', event => {
