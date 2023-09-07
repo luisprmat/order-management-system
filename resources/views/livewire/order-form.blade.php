@@ -25,7 +25,11 @@
 
                             <x-text-input
                                 x-data
-                                x-init="new Pikaday({ field: $el, format: 'MM/DD/YYYY' })"
+                                x-init="new Pikaday({
+                                    field: $el,
+                                    format: 'MM/DD/YYYY',
+                                    i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
+                                })"
                                 type="text"
                                 id="order_date"
                                 wire:model.lazy="order.order_date"

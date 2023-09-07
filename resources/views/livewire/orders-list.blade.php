@@ -81,7 +81,11 @@
                                             {{ __('From') }}
                                             <x-text-input
                                                 x-data
-                                                x-init="new Pikaday({ field: $el, format: 'MM/DD/YYYY' })"
+                                                x-init="new Pikaday({
+                                                    field: $el,
+                                                    format: 'MM/DD/YYYY',
+                                                    i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
+                                                })"
                                                 wire:model.lazy="searchColumns.order_date.0"
                                                 type="text"
                                                 placeholder="{{ __('MM/DD/YYYY') }}"
@@ -91,7 +95,11 @@
                                             {{ __('To') }}
                                             <x-text-input
                                                 x-data
-                                                x-init="new Pikaday({ field: $el, format: 'MM/DD/YYYY' })"
+                                                x-init="new Pikaday({
+                                                    field: $el,
+                                                    format: 'MM/DD/YYYY',
+                                                    i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
+                                                })"
                                                 wire:model.lazy="searchColumns.order_date.1"
                                                 type="text"
                                                 placeholder="{{ __('MM/DD/YYYY') }}"
