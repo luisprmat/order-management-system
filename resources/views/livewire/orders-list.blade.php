@@ -84,6 +84,7 @@
                                                 x-init="new Pikaday({
                                                     field: $el,
                                                     format: 'MM/DD/YYYY',
+                                                    theme: 'dark-theme',
                                                     i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
                                                 })"
                                                 wire:model.lazy="searchColumns.order_date.0"
@@ -98,6 +99,7 @@
                                                 x-init="new Pikaday({
                                                     field: $el,
                                                     format: 'MM/DD/YYYY',
+                                                    theme: 'dark-theme',
                                                     i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
                                                 })"
                                                 wire:model.lazy="searchColumns.order_date.1"

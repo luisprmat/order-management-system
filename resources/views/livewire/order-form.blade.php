@@ -28,6 +28,7 @@
                                 x-init="new Pikaday({
                                     field: $el,
                                     format: 'MM/DD/YYYY',
+                                    theme: 'dark-theme',
                                     i18n: $store.pikaday.dateLocale.{{ config('app.locale') }}
                                 })"
                                 type="text"
